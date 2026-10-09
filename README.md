@@ -105,7 +105,8 @@ src/main/resources
 ## Equipo de Trabajo
 | Integrante | Responsabilidades |
 |---|---|
-| [Pablo González] | [Historias /Documentacion/Prototipo/Modelo Preliminar] | [Ever Daniel Jiménez Mesen ] | [Historias /Mapa de Navegacion] |
+| [Pablo González] | [Historias /Documentacion/Prototipo/Modelo Preliminar] |
+[Ever Daniel Jiménez Mesen ] | [Historias /Mapa de Navegacion] |
 | [Daniel Jimenez Morales] | [Historias / Github] |
 | [Audry Maria Porras Ulloa] | [Historias ] |
 

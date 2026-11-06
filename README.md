@@ -8,18 +8,18 @@ Ver `Backlog_TallerArte_Avance2.xlsx` (columna Estado + enlace al PR de cada HU)
 
 | HU | Título | Estado |
 |---|---|---|
-| HU-01 | Registro de cuenta | ☐ |
-| HU-02 | Inicio de sesión | ☐ |
-| HU-03 | Catálogo de talleres | ☐ |
-| HU-04 | Detalle del taller | ☐ |
-| HU-05 | Reservar un cupo | ☐ |
-| HU-09 | CRUD de talleres | ☐ |
-| HU-10 | Sesiones | ☐ |
-| HU-11 | Instructores y usuarios | ☐ |
-| HU-12 | Mis reservas | ☐ |
-| HU-13 | Cancelación de reservas | ☐ |
-| HU-17 | Textos desde archivos de propiedades | ☐ |
-| HU-21 | Gestión de reservas (Administrador) | ☐ |
+| HU-01 | Registro de cuenta | ✅|
+| HU-02 | Inicio de sesión | ✅ |
+| HU-03 | Catálogo de talleres | ✅ |
+| HU-04 | Detalle del taller |✅ |
+| HU-05 | Reservar un cupo | ✅ |
+| HU-09 | CRUD de talleres | ✅|
+| HU-10 | Sesiones | ✅ |
+| HU-11 | Instructores y usuarios |✅ |
+| HU-12 | Mis reservas | ✅ |
+| HU-13 | Cancelación de reservas | ✅ |
+| HU-17 | Textos desde archivos de propiedades | ✅ |
+| HU-21 | Gestión de reservas (Administrador) |✅ |
 
 > Cambiar ☐ por ✅ solo cuando la HU cumple todos sus criterios de aceptación.
 

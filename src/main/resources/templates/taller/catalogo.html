@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{general/fragmentos :: cabecera(#{app.nombre})}"></head>
+<body>
+    <header th:replace="~{general/fragmentos :: menu}"></header>
+    <main class="container mt-4">
+        <div class="alert alert-success" th:if="${exito}" th:text="#{${exito}}"></div>
+        <div class="alert alert-danger" th:if="${error}" th:text="#{${error}}"></div>
+        <h2 class="mb-3">[[#{taller.catalogo.titulo}]]</h2>
+
+        <div class="mb-4 d-flex flex-wrap gap-2">
+            <a class="btn btn-sm" th:classappend="${categoriaSeleccionada == null} ? 'btn-taller' : 'btn-outline-primary'"
+               th:href="@{/taller/catalogo}">[[#{taller.todas}]]</a>
+            <a class="btn btn-sm" th:each="c : ${categorias}" th:text="${c.nombre}"
+               th:classappend="${categoriaSeleccionada == c.idCategoria} ? 'btn-taller' : 'btn-outline-primary'"
+               th:href="@{/taller/catalogo(categoria=${c.idCategoria})}">Categoria</a>
+        </div>
+
+        <p class="text-muted" th:if="${#lists.isEmpty(talleres)}">[[#{taller.catalogo.vacio}]]</p>
+
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4" th:each="t : ${talleres}">
+                <div class="card h-100 shadow-sm tarjeta-taller">
+                    <div class="card-body">
+                        <span class="badge bg-info text-dark mb-2" th:text="${t.categoria.nombre}">Categoria</span>
+                        <h5 class="card-title" th:text="${t.nombre}">Taller</h5>
+                        <p class="card-text" th:text="${t.descripcion}">Descripcion</p>
+                        <ul class="list-unstyled small mb-0">
+                            <li><i class="fa-solid fa-calendar icono-taller"></i> <span th:text="${#temporals.format(t.fechaHora, 'dd/MM/yyyy HH:mm')}"></span></li>
+                            <li><i class="fa-solid fa-location-dot icono-taller"></i> <span th:text="${t.lugar}"></span></li>
+                            <li><i class="fa-solid fa-user icono-taller"></i> <span th:text="${t.instructor.nombre}"></span></li>
+                            <li><i class="fa-solid fa-users icono-taller"></i> [[${t.cupos}]] [[#{taller.cupos}]]</li>
+                            <li><i class="fa-solid fa-tag icono-taller"></i> <span th:text="'₡' + ${#numbers.formatDecimal(t.precio, 1, 'COMMA', 2, 'POINT')}"></span></li>
+                        </ul>
+                    </div>
+                    <div class="card-footer bg-transparent border-0 pb-3">
+                        <a class="btn btn-taller btn-sm" th:href="@{/taller/detalle/{id}(id=${t.idTaller})}">[[#{taller.ver.detalle}]]</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="~{general/fragmentos :: pie}"></footer>
+    <th:block th:replace="~{general/fragmentos :: scripts}"></th:block>
+</body>
+</html>

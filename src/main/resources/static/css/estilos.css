@@ -1,0 +1,248 @@
+:root {
+    --azul: #5ba8ec;
+    --azul-oscuro: #3d8fd6;
+    --crema: #f8f5f0;
+    --texto: #262626;
+    --rojo: #b3261e;
+}
+
+body {
+    background-color: var(--crema);
+    color: var(--texto);
+}
+
+/* Barra de navegacion y pie */
+.barra-taller,
+.pie-taller {
+    background-color: #ffffff;
+}
+
+.barra-taller {
+    border-bottom: 1px solid var(--azul);
+}
+
+.pie-taller {
+    border-top: 1px solid var(--azul);
+}
+
+.barra-taller .navbar-brand {
+    color: var(--texto);
+    font-weight: 700;
+}
+
+.barra-taller .nav-link {
+    color: var(--texto);
+}
+
+.barra-taller .nav-link:hover {
+    color: var(--azul);
+}
+
+.logo-taller {
+    background-color: var(--azul);
+    color: #ffffff;
+    border-radius: 10px;
+    padding: 4px 8px;
+    margin-right: 6px;
+}
+
+.idioma-taller a {
+    color: var(--texto);
+    text-decoration: none;
+    font-size: 0.85rem;
+}
+
+.idioma-taller a:hover {
+    color: var(--azul);
+}
+
+/* Botones */
+.btn-taller {
+    background-color: var(--azul);
+    border: none;
+    border-radius: 10px;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 0.55rem 1.2rem;
+}
+
+.btn-taller:hover {
+    background-color: var(--azul-oscuro);
+    color: #ffffff;
+}
+
+.btn-contorno {
+    background-color: #ffffff;
+    border: 1px solid var(--azul);
+    border-radius: 10px;
+    color: var(--texto);
+    font-weight: 600;
+    padding: 0.55rem 1.2rem;
+}
+
+/* Tarjeta de formularios y avisos */
+.tarjeta-formulario {
+    background-color: #ffffff;
+    border: 1px solid var(--azul);
+    border-radius: 18px;
+    padding: 2rem;
+    max-width: 480px;
+    box-shadow: 0 4px 14px rgba(91, 168, 236, 0.15);
+}
+
+.etiqueta-taller {
+    color: var(--azul);
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.campo-taller {
+    border: 1px solid var(--azul);
+    border-radius: 10px;
+    padding: 0.65rem 0.9rem;
+}
+
+.campo-error {
+    border-color: var(--rojo);
+}
+
+.mensaje-error {
+    color: var(--rojo);
+    font-size: 0.8rem;
+    margin: 0.25rem 0 0;
+}
+
+/* Inicio con sesion */
+.franja-taller {
+    background-color: #dce9f3;
+    border-radius: 18px;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+/* Tarjetas y formularios del modulo de talleres */
+.tarjeta-taller {
+    background-color: #ffffff;
+    border: 1px solid var(--azul);
+    border-radius: 16px;
+}
+
+.icono-taller {
+    color: var(--azul);
+}
+
+/* ===== Modulo de reservas ===== */
+.aviso-exito,
+.aviso-error {
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+}
+
+.aviso-exito {
+    background-color: #dce9f3;
+    border: 1px solid var(--azul);
+    color: var(--texto);
+}
+
+.aviso-error {
+    background-color: #ffffff;
+    border: 1px solid var(--rojo);
+    color: var(--rojo);
+}
+
+/* Estados de la reserva */
+.badge-taller {
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.4em 0.75em;
+}
+
+.estado-confirmada {
+    background-color: var(--azul);
+    color: #ffffff;
+}
+
+.estado-asistida {
+    background-color: #dce9f3;
+    border: 1px solid var(--azul);
+    color: var(--texto);
+}
+
+.estado-cancelada {
+    background-color: #ffffff;
+    border: 1px solid var(--rojo);
+    color: var(--rojo);
+}
+
+/* Boton de accion destructiva (cancelar) */
+.btn-peligro-taller {
+    background-color: #ffffff;
+    border: 1px solid var(--rojo);
+    border-radius: 10px;
+    color: var(--rojo);
+    font-weight: 600;
+}
+
+.btn-peligro-taller:hover {
+    background-color: var(--rojo);
+    color: #ffffff;
+}
+
+.btn-sm.btn-taller,
+.btn-sm.btn-contorno,
+.btn-sm.btn-peligro-taller {
+    padding: 0.3rem 0.8rem;
+}
+
+/* Tablas */
+.contenedor-tabla {
+    overflow: hidden;
+}
+
+.tabla-taller {
+    margin-bottom: 0;
+}
+
+.tabla-taller thead th {
+    background-color: #dce9f3;
+    border-bottom: 1px solid var(--azul);
+    color: var(--texto);
+}
+
+/* Pestanas de "Mis reservas" */
+.tabs-taller {
+    border-bottom: 1px solid var(--azul);
+}
+
+.tabs-taller .nav-link {
+    border-radius: 10px 10px 0 0;
+    color: var(--texto);
+}
+
+.tabs-taller .nav-link:hover {
+    color: var(--azul);
+}
+
+.tabs-taller .nav-link.active {
+    border-color: var(--azul) var(--azul) #ffffff;
+    color: var(--azul-oscuro);
+    font-weight: 600;
+}
+
+.contenido-tabs {
+    background-color: #ffffff;
+    border: 1px solid var(--azul);
+    border-radius: 0 0 16px 16px;
+    border-top: 0;
+    padding: 1rem;
+}

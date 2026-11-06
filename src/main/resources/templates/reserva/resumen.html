@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{general/fragmentos :: cabecera(#{reserva.resumen.titulo})}"></head>
+<body>
+    <header th:replace="~{general/fragmentos :: menu}"></header>
+    <main class="container mt-4" style="max-width: 640px;">
+        <div class="card shadow-sm tarjeta-taller">
+            <div class="card-body text-center">
+                <i class="fa-solid fa-circle-check fa-2x icono-taller"></i>
+                <h4 class="mt-2 mb-0">[[#{reserva.resumen.exito}]]</h4>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>[[#{reserva.numero}]]</span><strong th:text="'#' + ${reserva.idReserva}">#1</strong></li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>[[#{reserva.taller}]]</span><strong th:text="${reserva.taller.nombre}">Taller</strong></li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>[[#{taller.fecha}]]</span>
+                    <strong th:text="${#temporals.format(reserva.taller.fechaHora, 'dd/MM/yyyy HH:mm')}">01/01/2026 09:00</strong></li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>[[#{taller.lugar}]]</span><strong th:text="${reserva.taller.lugar}">Lugar</strong></li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>[[#{taller.precio}]]</span>
+                    <strong th:text="'₡' + ${#numbers.formatDecimal(reserva.taller.precio, 1, 'COMMA', 2, 'POINT')}">₡0.00</strong></li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>[[#{reserva.estado}]]</span>
+                    <span class="badge-taller" th:classappend="'estado-' + ${#strings.toLowerCase(reserva.estado)}"
+                          th:text="#{${'reserva.estado.' + #strings.toLowerCase(reserva.estado)}}">Confirmada</span></li>
+            </ul>
+            <div class="card-body text-end">
+                <a class="btn btn-taller" th:href="@{/reserva/mis-reservas}">[[#{reserva.verMisReservas}]]</a>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="~{general/fragmentos :: pie}"></footer>
+    <th:block th:replace="~{general/fragmentos :: scripts}"></th:block>
+</body>
+</html>

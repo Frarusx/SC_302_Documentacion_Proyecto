@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{general/fragmentos :: cabecera(#{app.nombre})}"></head>
+<body>
+    <header th:replace="~{general/fragmentos :: menu}"></header>
+
+    <main class="container py-5">
+
+        <!-- Visitante sin sesion -->
+        <div class="tarjeta-formulario mx-auto text-center" sec:authorize="isAnonymous()">
+            <p class="etiqueta-taller">[[#{inicio.visitante.etiqueta}]]</p>
+            <h1 class="h3 fw-bold">[[#{inicio.visitante.titulo}]]</h1>
+            <p class="text-secondary">[[#{inicio.visitante.texto}]]</p>
+            <a class="btn btn-taller w-100 mb-3" th:href="@{/login}">[[#{inicio.visitante.entrar}]]</a>
+            <p class="fw-bold mb-3">[[#{inicio.visitante.o}]]</p>
+            <a class="btn btn-taller w-100 mb-4" th:href="@{/registro}">[[#{inicio.visitante.registro}]]</a>
+            <small class="text-secondary">[[#{app.seguro}]]</small>
+        </div>
+
+        <!-- Usuario con sesion -->
+        <div class="p-5 franja-taller" sec:authorize="isAuthenticated()">
+            <h1 class="display-6 fw-bold">[[#{inicio.usuario.titulo}]]</h1>
+            <p class="lead">[[#{inicio.usuario.texto}]]</p>
+            <a class="btn btn-taller" th:href="@{/taller/catalogo}">[[#{inicio.usuario.ver}]]</a>
+        </div>
+    </main>
+
+    <footer th:replace="~{general/fragmentos :: pie}"></footer>
+    <th:block th:replace="~{general/fragmentos :: scripts}"></th:block>
+</body>
+</html>

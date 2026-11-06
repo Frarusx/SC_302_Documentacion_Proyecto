@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{general/fragmentos :: cabecera(#{app.nombre})}"></head>
+<body>
+    <header th:replace="~{general/fragmentos :: menu}"></header>
+    <main class="container mt-4">
+        <h2 class="mb-3" th:text="${categoria.idCategoria == null} ? #{categoria.nueva} : #{categoria.editar}">Categoria</h2>
+        <form class="card shadow-sm tarjeta-taller p-4" method="post" th:action="@{/categoria/guardar}" th:object="${categoria}">
+            <input type="hidden" th:field="*{idCategoria}"/>
+            <div class="mb-3">
+                <label class="form-label" for="nombre">[[#{categoria.nombre}]]</label>
+                <input class="form-control" id="nombre" th:field="*{nombre}" th:errorclass="is-invalid"/>
+                <div class="invalid-feedback" th:errors="*{nombre}"></div>
+            </div>
+            <div class="mb-4">
+                <label class="form-label" for="descripcion">[[#{categoria.descripcion}]]</label>
+                <input class="form-control" id="descripcion" th:field="*{descripcion}" th:errorclass="is-invalid"/>
+                <div class="invalid-feedback" th:errors="*{descripcion}"></div>
+            </div>
+            <div>
+                <button class="btn btn-taller" type="submit">[[#{taller.guardar}]]</button>
+                <a class="btn btn-outline-secondary" th:href="@{/categoria/listado}">[[#{taller.cancelar}]]</a>
+            </div>
+        </form>
+    </main>
+    <footer th:replace="~{general/fragmentos :: pie}"></footer>
+    <th:block th:replace="~{general/fragmentos :: scripts}"></th:block>
+</body>
+</html>

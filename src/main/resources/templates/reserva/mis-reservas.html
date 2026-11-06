@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{general/fragmentos :: cabecera(#{reserva.mis.titulo})}"></head>
+<body>
+    <header th:replace="~{general/fragmentos :: menu}"></header>
+    <main class="container mt-4">
+        <h2 class="mb-3">[[#{reserva.mis.titulo}]]</h2>
+
+        <div class="aviso-exito" th:if="${exito}" th:text="#{${exito}}"></div>
+        <div class="aviso-error" th:if="${error}" th:text="#{${error}}"></div>
+
+        <!-- Cliente sin reservas -->
+        <div class="text-center py-5" th:if="${total == 0}">
+            <p class="lead">[[#{reserva.mis.vacio}]]</p>
+            <a class="btn btn-taller" th:href="@{/taller/catalogo}">[[#{reserva.explorar}]]</a>
+        </div>
+
+        <div th:if="${total > 0}">
+            <ul class="nav nav-tabs tabs-taller" role="tablist">
+                <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-proximas" type="button">
+                    [[#{reserva.tab.proximas}]] <span class="badge-taller estado-asistida" th:text="${#lists.size(proximas)}">0</span></button></li>
+                <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-asistidas" type="button">
+                    [[#{reserva.tab.asistidas}]] <span class="badge-taller estado-asistida" th:text="${#lists.size(asistidas)}">0</span></button></li>
+                <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-canceladas" type="button">
+                    [[#{reserva.tab.canceladas}]] <span class="badge-taller estado-asistida" th:text="${#lists.size(canceladas)}">0</span></button></li>
+            </ul>
+
+            <div class="tab-content contenido-tabs">
+                <!-- PROXIMAS (con boton Cancelar) -->
+                <div class="tab-pane fade show active" id="tab-proximas">
+                    <p th:if="${#lists.isEmpty(proximas)}" class="text-muted">[[#{reserva.tab.vacia}]]</p>
+                    <div class="table-responsive" th:unless="${#lists.isEmpty(proximas)}">
+                        <table class="table tabla-taller align-middle">
+                            <thead><tr>
+                                <th>[[#{reserva.numero}]]</th><th>[[#{reserva.taller}]]</th>
+                                <th>[[#{taller.fecha}]]</th><th>[[#{taller.lugar}]]</th>
+                                <th>[[#{taller.precio}]]</th><th>[[#{reserva.estado}]]</th><th></th>
+                            </tr></thead>
+                            <tbody>
+                            <tr th:each="r : ${proximas}">
+                                <td th:text="'#' + ${r.idReserva}"></td>
+                                <td th:text="${r.taller.nombre}"></td>
+                                <td th:text="${#temporals.format(r.taller.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
+                                <td th:text="${r.taller.lugar}"></td>
+                                <td th:text="'₡' + ${#numbers.formatDecimal(r.taller.precio, 1, 'COMMA', 2, 'POINT')}"></td>
+                                <td><span class="badge-taller" th:classappend="'estado-' + ${#strings.toLowerCase(r.estado)}"
+                                          th:text="#{${'reserva.estado.' + #strings.toLowerCase(r.estado)}}"></span></td>
+                                <td class="text-end">
+                                    <button class="btn btn-peligro-taller btn-sm" data-bs-toggle="modal"
+                                            th:attr="data-bs-target='#modalCancelar' + ${r.idReserva}">[[#{reserva.cancelar}]]</button>
+                                    <!-- Modal de confirmacion previa -->
+                                    <div class="modal fade text-start" th:id="'modalCancelar' + ${r.idReserva}" tabindex="-1">
+                                        <div class="modal-dialog"><div class="modal-content tarjeta-taller">
+                                            <div class="modal-header"><h5 class="modal-title">[[#{reserva.cancelar.titulo}]]</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                                            <div class="modal-body"><p>[[#{reserva.cancelar.confirmar}]]</p>
+                                                <p class="fw-bold" th:text="${r.taller.nombre}"></p></div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-contorno" data-bs-dismiss="modal">[[#{reserva.cancelar.no}]]</button>
+                                                <form th:action="@{/reserva/{id}/cancelar(id=${r.idReserva})}" method="post">
+                                                    <button type="submit" class="btn btn-peligro-taller">[[#{reserva.cancelar.si}]]</button>
+                                                </form>
+                                            </div>
+                                        </div></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ASISTIDAS -->
+                <div class="tab-pane fade" id="tab-asistidas">
+                    <p th:if="${#lists.isEmpty(asistidas)}" class="text-muted">[[#{reserva.tab.vacia}]]</p>
+                    <table class="table tabla-taller align-middle" th:unless="${#lists.isEmpty(asistidas)}">
+                        <tbody><tr th:each="r : ${asistidas}">
+                            <td th:text="'#' + ${r.idReserva}"></td><td th:text="${r.taller.nombre}"></td>
+                            <td th:text="${#temporals.format(r.taller.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
+                            <td><span class="badge-taller" th:classappend="'estado-' + ${#strings.toLowerCase(r.estado)}"
+                                      th:text="#{${'reserva.estado.' + #strings.toLowerCase(r.estado)}}"></span></td>
+                        </tr></tbody>
+                    </table>
+                </div>
+
+                <!-- CANCELADAS -->
+                <div class="tab-pane fade" id="tab-canceladas">
+                    <p th:if="${#lists.isEmpty(canceladas)}" class="text-muted">[[#{reserva.tab.vacia}]]</p>
+                    <table class="table tabla-taller align-middle" th:unless="${#lists.isEmpty(canceladas)}">
+                        <tbody><tr th:each="r : ${canceladas}">
+                            <td th:text="'#' + ${r.idReserva}"></td><td th:text="${r.taller.nombre}"></td>
+                            <td th:text="${#temporals.format(r.taller.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
+                            <td><span class="badge-taller" th:classappend="'estado-' + ${#strings.toLowerCase(r.estado)}"
+                                      th:text="#{${'reserva.estado.' + #strings.toLowerCase(r.estado)}}"></span></td>
+                        </tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="~{general/fragmentos :: pie}"></footer>
+    <th:block th:replace="~{general/fragmentos :: scripts}"></th:block>
+</body>
+</html>

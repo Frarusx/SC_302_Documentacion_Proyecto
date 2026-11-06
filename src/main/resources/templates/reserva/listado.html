@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{general/fragmentos :: cabecera(#{admin.reservas.titulo})}"></head>
+<body>
+    <header th:replace="~{general/fragmentos :: menu}"></header>
+    <main class="container mt-4">
+        <h2 class="mb-3">[[#{admin.reservas.titulo}]]</h2>
+
+        <div class="aviso-exito" th:if="${exito}" th:text="#{${exito}}"></div>
+        <div class="aviso-error" th:if="${error}" th:text="#{${error}}"></div>
+
+        <!-- Filtros -->
+        <form class="row g-2 mb-3" th:action="@{/admin/reservas}" method="get">
+            <div class="col-md-3">
+                <input type="text" name="texto" class="form-control campo-taller" th:value="${texto}" th:placeholder="#{admin.reservas.buscar}">
+            </div>
+            <div class="col-md-3">
+                <select name="tallerId" class="form-select campo-taller">
+                    <option value="" th:text="#{admin.reservas.todosTalleres}">Todos los talleres</option>
+                    <option th:each="t : ${talleres}" th:value="${t.idTaller}" th:text="${t.nombre}"
+                            th:selected="${t.idTaller == tallerId}"></option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select name="estado" class="form-select campo-taller">
+                    <option value="" th:text="#{admin.reservas.todosEstados}">Todos los estados</option>
+                    <option value="Confirmada" th:selected="${estado == 'Confirmada'}" th:text="#{reserva.estado.confirmada}">Confirmada</option>
+                    <option value="Asistida" th:selected="${estado == 'Asistida'}" th:text="#{reserva.estado.asistida}">Asistida</option>
+                    <option value="Cancelada" th:selected="${estado == 'Cancelada'}" th:text="#{reserva.estado.cancelada}">Cancelada</option>
+                </select>
+            </div>
+            <div class="col-md-3 d-flex gap-2">
+                <button class="btn btn-taller" type="submit">[[#{admin.reservas.filtrar}]]</button>
+                <a class="btn btn-contorno" th:href="@{/admin/reservas}">[[#{admin.reservas.limpiar}]]</a>
+            </div>
+        </form>
+
+        <p class="text-muted" th:if="${#lists.isEmpty(reservas)}">[[#{admin.reservas.vacio}]]</p>
+
+        <div class="tarjeta-taller contenedor-tabla table-responsive" th:unless="${#lists.isEmpty(reservas)}">
+            <table class="table tabla-taller align-middle">
+                <thead><tr>
+                    <th>[[#{reserva.numero}]]</th><th>[[#{admin.reservas.cliente}]]</th>
+                    <th>[[#{reserva.taller}]]</th><th>[[#{taller.fecha}]]</th>
+                    <th>[[#{admin.reservas.cupos}]]</th><th>[[#{reserva.estado}]]</th><th></th>
+                </tr></thead>
+                <tbody>
+                <tr th:each="r : ${reservas}">
+                    <td th:text="'#' + ${r.idReserva}"></td>
+                    <td><div th:text="${r.usuario.nombre}"></div><small class="text-muted" th:text="${r.usuario.correo}"></small></td>
+                    <td th:text="${r.taller.nombre}"></td>
+                    <td th:text="${#temporals.format(r.taller.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td th:text="${r.taller.cupos}"></td>
+                    <td><span class="badge-taller" th:classappend="'estado-' + ${#strings.toLowerCase(r.estado)}"
+                              th:text="#{${'reserva.estado.' + #strings.toLowerCase(r.estado)}}"></span></td>
+                    <td class="text-end" th:if="${r.estado == 'Confirmada'}">
+                        <form class="d-inline" th:action="@{/admin/reservas/{id}/asistida(id=${r.idReserva})}" method="post">
+                            <button class="btn btn-contorno btn-sm">[[#{admin.reservas.marcarAsistida}]]</button></form>
+                        <form class="d-inline" th:action="@{/admin/reservas/{id}/cancelar(id=${r.idReserva})}" method="post"
+                              onsubmit="return confirm(this.dataset.msg)" th:attr="data-msg=#{reserva.cancelar.confirmar}">
+                            <button class="btn btn-peligro-taller btn-sm">[[#{reserva.cancelar}]]</button></form>
+                    </td>
+                    <td th:unless="${r.estado == 'Confirmada'}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <footer th:replace="~{general/fragmentos :: pie}"></footer>
+    <th:block th:replace="~{general/fragmentos :: scripts}"></th:block>
+</body>
+</html>

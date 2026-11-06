@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{general/fragmentos :: cabecera(#{app.nombre})}"></head>
+<body>
+    <header th:replace="~{general/fragmentos :: menu}"></header>
+    <main class="container mt-4">
+        <div class="alert alert-success" th:if="${exito}" th:text="#{${exito}}"></div>
+        <div class="alert alert-danger" th:if="${error}" th:text="#{${error}}"></div>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="mb-0">[[#{categoria.titulo}]]</h2>
+            <a class="btn btn-taller" th:href="@{/categoria/nuevo}"><i class="fa-solid fa-plus"></i> [[#{categoria.nueva}]]</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle bg-white">
+                <thead>
+                    <tr><th>[[#{categoria.nombre}]]</th><th>[[#{categoria.descripcion}]]</th><th></th></tr>
+                </thead>
+                <tbody>
+                    <tr th:each="c : ${categorias}">
+                        <td th:text="${c.nombre}"></td>
+                        <td th:text="${c.descripcion}"></td>
+                        <td class="text-end">
+                            <a class="btn btn-sm btn-outline-primary" th:href="@{/categoria/editar/{id}(id=${c.idCategoria})}"><i class="fa-solid fa-pen"></i></a>
+                            <form class="d-inline" method="post" th:action="@{/categoria/eliminar/{id}(id=${c.idCategoria})}"
+                                  th:data-confirm="#{categoria.confirmar.eliminar}"
+                                  onsubmit="return confirm(this.dataset.confirm)">
+                                <button class="btn btn-sm btn-outline-danger" type="submit"><i class="fa-solid fa-trash"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <footer th:replace="~{general/fragmentos :: pie}"></footer>
+    <th:block th:replace="~{general/fragmentos :: scripts}"></th:block>
+</body>
+</html>

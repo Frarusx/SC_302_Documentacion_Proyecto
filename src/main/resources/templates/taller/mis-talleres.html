@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{general/fragmentos :: cabecera(#{app.nombre})}"></head>
+<body>
+    <header th:replace="~{general/fragmentos :: menu}"></header>
+    <main class="container mt-4">
+        <div class="alert alert-success" th:if="${exito}" th:text="#{${exito}}"></div>
+        <div class="alert alert-danger" th:if="${error}" th:text="#{${error}}"></div>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="mb-0">[[#{taller.mis.titulo}]]</h2>
+            <a class="btn btn-taller" th:href="@{/taller/nuevo}"><i class="fa-solid fa-plus"></i> [[#{taller.nuevo}]]</a>
+        </div>
+
+        <p class="text-muted" th:if="${#lists.isEmpty(talleres)}">[[#{taller.mis.vacio}]]</p>
+
+        <div class="table-responsive" th:unless="${#lists.isEmpty(talleres)}">
+            <table class="table table-hover align-middle bg-white">
+                <thead>
+                    <tr>
+                        <th>[[#{taller.nombre}]]</th>
+                        <th>[[#{taller.categoria}]]</th>
+                        <th>[[#{taller.fecha}]]</th>
+                        <th>[[#{taller.cupos}]]</th>
+                        <th>[[#{taller.precio}]]</th>
+                        <th>[[#{taller.estado}]]</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="t : ${talleres}">
+                        <td th:text="${t.nombre}"></td>
+                        <td th:text="${t.categoria.nombre}"></td>
+                        <td th:text="${#temporals.format(t.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
+                        <td th:text="${t.cupos}"></td>
+                        <td th:text="'₡' + ${#numbers.formatDecimal(t.precio, 1, 'COMMA', 2, 'POINT')}"></td>
+                        <td>
+                            <span class="badge bg-success" th:if="${t.activo}">[[#{taller.activo}]]</span>
+                            <span class="badge bg-secondary" th:unless="${t.activo}">[[#{taller.inactivo}]]</span>
+                        </td>
+                        <td class="text-end">
+                            <a class="btn btn-sm btn-outline-primary" th:href="@{/taller/editar/{id}(id=${t.idTaller})}"><i class="fa-solid fa-pen"></i></a>
+                            <form class="d-inline" method="post" th:action="@{/taller/eliminar/{id}(id=${t.idTaller})}"
+                                  th:data-confirm="#{taller.confirmar.eliminar}"
+                                  onsubmit="return confirm(this.dataset.confirm)">
+                                <button class="btn btn-sm btn-outline-danger" type="submit"><i class="fa-solid fa-trash"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <footer th:replace="~{general/fragmentos :: pie}"></footer>
+    <th:block th:replace="~{general/fragmentos :: scripts}"></th:block>
+</body>
+</html>

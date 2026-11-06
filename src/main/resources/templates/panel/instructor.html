@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{general/fragmentos :: cabecera(#{panel.instructor.titulo})}"></head>
+<body>
+    <header th:replace="~{general/fragmentos :: menu}"></header>
+    <main class="container py-5">
+        <h1 class="fw-bold">[[#{panel.hola}]], <span sec:authentication="principal.nombreCompleto">Usuario</span></h1>
+        <p class="text-secondary">[[#{panel.instructor.titulo}]] · [[#{panel.construccion}]]</p>
+    </main>
+    <footer th:replace="~{general/fragmentos :: pie}"></footer>
+    <th:block th:replace="~{general/fragmentos :: scripts}"></th:block>
+</body>
+</html>

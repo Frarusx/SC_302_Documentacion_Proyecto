@@ -41,8 +41,9 @@ OpenPDF (librería investigada), Figma, Git/GitHub.
 ## Usuarios de prueba
 | Rol | Correo | Contraseña |
 |---|---|---|
-| Administrador | admin@tallerarte.com | (definir) |
-| Cliente | cliente@tallerarte.com | (definir) |
+| Administrador | admin@tallerarte.com | Admin2026 |
+| Cliente | cliente@tallerarte.com | Cliente2026 |
+| Instructor | instructor@tallerarte.cr | Instructor2026 |
 
 ## Estructura
 ```
@@ -62,8 +63,9 @@ src/main/resources
 - Commits descriptivos; todo llega a `main` por pull request revisado por otro integrante.
 
 ## Equipo
-Pablo González Garita · Ever Daniel Jiménez Mesen · Daniel Jiménez Morales · Audry María Porras Ulloa
+Pablo González Garita · Daniel Jiménez Morales · Audry María Porras Ulloa
 Curso SC-403 Desarrollo de Aplicaciones Web y Patrones · Universidad Fidélitas
+Grupo#4
 
 ## Enlaces
 - Prototipo (Figma): https://www.figma.com/design/h4Rw1uzr0D6ZoluUIm57gY/Prototipo-DAW?node-id=0-1&t=2690ukzbfQ77zu0I-1
